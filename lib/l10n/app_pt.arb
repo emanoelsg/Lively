@@ -1,0 +1,91 @@
+{
+  "@@locale": "pt",
+  "appName": "Lively",
+  "remaining": "Restante",
+  "spent": "Gasto",
+  "budget": "Orçamento",
+  "noBudget": "Nenhum orçamento mensal definido",
+  "setBudget": "Definir Orçamento",
+  "history": "Histórico de Eventos",
+  "noEvents": "Nenhum evento ainda",
+  "addEvent": "Adicionar Evento",
+  "editEvent": "Editar Evento",
+  "name": "Nome",
+  "namePlaceholder": "Digite o nome do evento",
+  "value": "Valor",
+  "valuePlaceholder": "Digite o valor",
+  "deleteConfirm": "Tem certeza que deseja excluir este evento?",
+  "delete": "Excluir",
+  "cancel": "Cancelar",
+  "save": "Salvar Alterações",
+  "add": "Adicionar Evento",
+  "nameRequired": "Digite um nome",
+  "valueRequired": "Digite um valor",
+  "invalidNumber": "Digite um número válido",
+  "valuePositive": "O valor deve ser maior que zero",
+  "valueTooLarge": "O valor é muito grande",
+  "profileTitle": "Perfil",
+  "changePhoto": "Alterar Foto",
+  "nickname": "Apelido",
+  "nicknamePlaceholder": "Digite seu apelido",
+  "saveProfile": "Salvar Perfil",
+  "profileSaved": "Perfil salvo",
+  "errorPickingImage": "Erro ao selecionar imagem: {error}",
+  "@errorPickingImage": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "errorSavingProfile": "Erro ao salvar perfil: {error}",
+  "@errorSavingProfile": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "settingsTitle": "Configurações",
+  "monthlyBudget": "Orçamento Mensal",
+  "budgetAmount": "Valor do Orçamento",
+  "budgetPlaceholder": "Digite o orçamento mensal",
+  "saveBudget": "Salvar Orçamento",
+  "budgetSaved": "Orçamento salvo",
+  "backup": "Backup",
+  "export": "Exportar para Downloads",
+  "import": "Importar dos Downloads",
+  "importTitle": "Importar Backup",
+  "importConfirm": "Deseja substituir todos os dados existentes pelo backup?",
+  "merge": "Mesclar",
+  "replace": "Substituir",
+  "backupSaved": "Backup salvo em {path}",
+  "@backupSaved": {
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "backupImported": "Backup importado com sucesso",
+  "fileNotFound": "Arquivo de backup não encontrado em {path}",
+  "@fileNotFound": {
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "invalidFormat": "Formato de backup inválido",
+  "exportError": "Erro ao exportar backup: {error}",
+  "@exportError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "importError": "Erro ao importar backup: {error}",
+  "@importError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "error": "Erro: {message}",
+  "@error": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "ok": "OK"
+}

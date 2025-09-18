@@ -1,0 +1,91 @@
+{
+  "@@locale": "en",
+  "appName": "Lively",
+  "remaining": "Remaining",
+  "spent": "Spent",
+  "budget": "Budget",
+  "noBudget": "No monthly budget set",
+  "setBudget": "Set Budget",
+  "history": "Event History",
+  "noEvents": "No events yet",
+  "addEvent": "Add Event",
+  "editEvent": "Edit Event",
+  "name": "Name",
+  "namePlaceholder": "Enter event name",
+  "value": "Value",
+  "valuePlaceholder": "Enter value",
+  "deleteConfirm": "Are you sure you want to delete this event?",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "save": "Save Changes",
+  "add": "Add Event",
+  "nameRequired": "Please enter a name",
+  "valueRequired": "Please enter a value",
+  "invalidNumber": "Please enter a valid number",
+  "valuePositive": "Value must be greater than zero",
+  "valueTooLarge": "Value is too large",
+  "profileTitle": "Profile",
+  "changePhoto": "Change Photo",
+  "nickname": "Nickname",
+  "nicknamePlaceholder": "Enter your nickname",
+  "saveProfile": "Save Profile",
+  "profileSaved": "Profile saved",
+  "errorPickingImage": "Error picking image: {error}",
+  "@errorPickingImage": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "errorSavingProfile": "Error saving profile: {error}",
+  "@errorSavingProfile": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "settingsTitle": "Settings",
+  "monthlyBudget": "Monthly Budget",
+  "budgetAmount": "Budget Amount",
+  "budgetPlaceholder": "Enter monthly budget",
+  "saveBudget": "Save Budget",
+  "budgetSaved": "Budget saved",
+  "backup": "Backup",
+  "export": "Export to Downloads",
+  "import": "Import from Downloads",
+  "importTitle": "Import Backup",
+  "importConfirm": "Do you want to replace all existing data with the backup?",
+  "merge": "Merge",
+  "replace": "Replace",
+  "backupSaved": "Backup saved to {path}",
+  "@backupSaved": {
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "backupImported": "Backup imported successfully",
+  "fileNotFound": "Backup file not found at {path}",
+  "@fileNotFound": {
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "invalidFormat": "Invalid backup file format",
+  "exportError": "Error exporting backup: {error}",
+  "@exportError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "importError": "Error importing backup: {error}",
+  "@importError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "error": "Error: {message}",
+  "@error": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "ok": "OK"
+}
