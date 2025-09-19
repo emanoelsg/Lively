@@ -93,73 +93,87 @@ class _AddEditEventScreenState extends ConsumerState<AddEditEventScreen> {
       appBar: AppBar(
         title: Text(widget.eventId == null ? 'Add Event' : 'Edit Event'),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Name',
-                          hintText: 'Enter event name',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Name',
+                            hintText: 'Enter event name',
+                            border: OutlineInputBorder(),
+                          ),
+                          textCapitalization: TextCapitalization.sentences,
+                          maxLength: AppConstants.maxNameLength,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter a name';
+                            }
+                            return null;
+                          },
                         ),
-                        textCapitalization: TextCapitalization.sentences,
-                        maxLength: AppConstants.maxNameLength,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Please enter a name';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _valueController,
-                        decoration: const InputDecoration(
-                          labelText: 'Value',
-                          hintText: 'Enter value',
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _valueController,
+                          decoration: const InputDecoration(
+                            labelText: 'Value',
+                            hintText: 'Enter value',
+                            border: OutlineInputBorder(),
+                            prefixText: '\$', // Add currency symbol
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          inputFormatters: [
+                            DecimalTextInputFormatter(),
+                          ],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a value';
+                            }
+                            final number = double.tryParse(value);
+                            if (number == null || number <= 0 || number > AppConstants.maxBudgetValue) {
+                              return 'Please enter a valid amount';
+                            }
+                            return null;
+                          },
                         ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        inputFormatters: [
-                          DecimalTextInputFormatter(),
-                        ],
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a value';
-                          }
-                          final number = double.tryParse(value);
-                          if (number == null) {
-                            return 'Please enter a valid number';
-                          }
-                          if (number <= 0) {
-                            return 'Value must be greater than zero';
-                          }
-                          if (number > AppConstants.maxBudgetValue) {
-                            return 'Value is too large';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 32),
-                      ElevatedButton(
-                        onPressed: _saveEvent,
-                        child: Text(
-                          widget.eventId == null ? 'Add Event' : 'Save Changes',
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 32),
+                _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton.icon(
+                        onPressed: _saveEvent,
+                        icon: Icon(widget.eventId == null ? Icons.add_circle_outline : Icons.save_outlined),
+                        label: Text(
+                          widget.eventId == null ? 'Add Event' : 'Save Changes',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                      ),
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 }

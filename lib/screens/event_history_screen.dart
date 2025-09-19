@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lively/providers/event_provider.dart';
-import 'package:lively/widgets/event_card.dart';
+import 'package:lively/core/utils/formatters.dart';
 
 /// Screen that shows the history of all events
 class EventHistoryScreen extends ConsumerWidget {
@@ -25,14 +25,27 @@ class EventHistoryScreen extends ConsumerWidget {
                   itemCount: eventState.events.length,
                   itemBuilder: (context, index) {
                     final event = eventState.events[index];
-                    return EventCard(
-                      event: event,
-                      onEdit: () => context.push('/event/edit/${event.id}'),
-                      onDelete: () {
-                        ref
-                            .read(eventNotifierProvider.notifier)
-                            .deleteEvent(event.id!);
-                      },
+                    return ListTile(
+                      title: Text(event.name),
+                      subtitle: Text(formatNumber(event.value)),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () => context.push('/event/edit/${event.id}'),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              ref
+                                  .read(eventNotifierProvider.notifier)
+                                  .deleteEvent(event.id!);
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () => context.push('/event/edit/${event.id}'),
                     );
                   },
                 ),
@@ -49,7 +62,7 @@ class _EmptyHistoryView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            Icons.history,
+            Icons.list_alt,
             size: 64,
             color: Colors.grey,
           ),
@@ -58,10 +71,16 @@ class _EmptyHistoryView extends StatelessWidget {
             'No events yet',
             style: TextStyle(fontSize: 20),
           ),
+          const SizedBox(height: 8),
+          const Text(
+            'Start by adding your first event.',
+            style: TextStyle(fontSize: 14, color: Colors.grey),
+          ),
           const SizedBox(height: 16),
-          ElevatedButton(
+          ElevatedButton.icon(
             onPressed: () => context.push('/event/add'),
-            child: const Text('Add Event'),
+            icon: const Icon(Icons.add),
+            label: const Text('Add First Event'),
           ),
         ],
       ),

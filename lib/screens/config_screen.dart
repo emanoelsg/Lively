@@ -57,9 +57,9 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
       await ref.read(budgetNotifierProvider.notifier).setBudget(value);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Budget saved')),
+          const SnackBar(content: Text('Budget saved successfully!')),
         );
-         context.pop();
+        context.pop();
       }
     } catch (e) {
       _showError(e.toString());
@@ -72,14 +72,12 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
     try {
       setState(() => _isLoading = true);
       final budget = ref.read(budgetNotifierProvider).budget ?? 0.0;
-      final filePath = await ref
-          .read(eventNotifierProvider.notifier)
-          .exportToJson(budget);
+      await ref.read(eventNotifierProvider.notifier).exportToJson(budget);
 
-      if (filePath != null && mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Backup saved to $filePath'),
+          const SnackBar(
+            content: Text('Backup saved successfully!'),
             duration: AppConstants.snackBarDuration,
           ),
         );
@@ -99,7 +97,7 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
         builder: (context) => AlertDialog(
           title: const Text('Import Backup'),
           content: const Text(
-            'Do you want to replace all existing data with the backup?',
+            'Do you want to replace all existing data with the backup or merge them?',
           ),
           actions: [
             TextButton(
@@ -116,8 +114,6 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
 
       if (shouldReplace == null) return;
 
-      // For this demo, we'll use a fixed path. In a real app,
-      // you'd use a file picker or platform-specific API to select the file.
       final downloadsDir = await _getDownloadsDirectory();
       final filePath = '${downloadsDir.path}/${AppConstants.backupFileName}';
 
@@ -130,7 +126,6 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
             replace: shouldReplace,
           );
 
-      // Reload budget after import
       await ref.read(budgetNotifierProvider.notifier).loadBudget();
 
       if (mounted) {
@@ -140,7 +135,7 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Backup imported successfully')),
+          const SnackBar(content: Text('Backup imported successfully!')),
         );
       }
     } catch (e) {
@@ -168,7 +163,6 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
       return directory;
     }
 
-    // iOS: Use documents directory as there's no public Downloads folder
     return Directory('${Directory.systemTemp.path}/Downloads')
       ..createSync(recursive: true);
   }
@@ -186,49 +180,69 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Monthly Budget',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Monthly Budget',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: _budgetController,
+                            decoration: const InputDecoration(
+                              labelText: 'Budget Amount',
+                              hintText: 'Enter monthly budget',
+                              border: OutlineInputBorder(),
+                              prefixText: '\$', // Add currency symbol
+                            ),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
+                            inputFormatters: [
+                              DecimalTextInputFormatter(),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: _saveBudget,
+                            child: const Text('Save Budget'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _budgetController,
-                    decoration: const InputDecoration(
-                      labelText: 'Budget Amount',
-                      hintText: 'Enter monthly budget',
+                  const SizedBox(height: 24),
+                  Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Backup',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton.icon(
+                            onPressed: _exportBackup,
+                            icon: const Icon(Icons.upload_file),
+                            label: const Text('Export Data'),
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton.icon(
+                            onPressed: _importBackup,
+                            icon: const Icon(Icons.download_for_offline),
+                            label: const Text('Import Data'),
+                          ),
+                        ],
+                      ),
                     ),
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    inputFormatters: [
-                      DecimalTextInputFormatter(),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _saveBudget,
-                    child: const Text('Save Budget'),
-                  ),
-                  const SizedBox(height: 32),
-                  const Text(
-                    'Backup',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _exportBackup,
-                    child: const Text('Export to Downloads'),
-                  ),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: _importBackup,
-                    child: const Text('Import from Downloads'),
                   ),
                 ],
               ),

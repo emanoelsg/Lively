@@ -138,7 +138,10 @@ class EventRepository {
       );
     });
   }
-
+   Future<void> deleteAllEvents() async {
+    final db = await AppDatabase.instance.database;
+    await db.delete(AppConstants.eventsTable);
+  }
   /// Gets the platform-specific downloads directory
   Future<Directory> _getDownloadsDirectory() async {
     if (Platform.isAndroid) {
