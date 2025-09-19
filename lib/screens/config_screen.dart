@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lively/core/constants.dart';
 import 'package:lively/core/utils/formatters.dart';
 import 'package:lively/providers/budget_provider.dart';
@@ -58,6 +59,7 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Budget saved')),
         );
+         context.pop();
       }
     } catch (e) {
       _showError(e.toString());
