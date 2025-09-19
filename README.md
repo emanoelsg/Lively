@@ -1,7 +1,7 @@
 
 # Lively Budget Manager 📊
 
-[![Flutter CI](https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPOSITORY_NAME>/actions/workflows/ci.yml/badge.svg)](https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPOSITORY_NAME>/actions/workflows/ci.yml)
+[![Flutter CI](https://github.com/emanoelsg/Lively/actions/workflows/ci.yml/badge.svg)](https://github.com/emanoelsg/Lively/actions/workflows/ci.yml)
 
 Lively is a simple, beautiful, and 100% offline monthly expense manager built with Flutter. It helps you track your spending against a monthly budget in a clean and intuitive interface.
 
