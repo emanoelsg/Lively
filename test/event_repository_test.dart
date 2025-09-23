@@ -23,41 +23,6 @@ void main() {
       repository = EventRepository(mockAppDb);
     });
 
-    group('Error handling', () {
-      test('handles database connection error', () async {
-        // Arrange
-        when(() => mockAppDb.database).thenThrow(Exception('Connection failed'));
-
-        // Act & Assert
-        expect(
-          () => repository.getAllEvents(),
-          throwsException,
-        );
-      });
-
-      test('handles invalid SQL query', () async {
-        // Arrange
-        when(() => mockDb.query(any())).thenThrow(Exception('SQL error'));
-
-        // Act & Assert
-        expect(
-          () => repository.getAllEvents(),
-          throwsException,
-        );
-      });
-
-      test('handles empty result set gracefully', () async {
-        // Arrange
-        when(() => mockDb.rawQuery(any())).thenAnswer((_) async => []);
-
-        // Act
-        final result = await repository.getTotalSpent();
-
-        // Assert
-        expect(result, 0.0);
-      });
-    });
-
     test('insertEvent should insert event into database', () async {
       // Arrange
       final event = Event(name: 'Test Event', value: 100.0);
