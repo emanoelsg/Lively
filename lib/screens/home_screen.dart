@@ -13,16 +13,47 @@ import 'package:lively/providers/profile_provider.dart';
 import 'dart:io';
 
 /// The main home screen of the app showing the budget donut chart
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Watch all the necessary providers to automatically rebuild the UI
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(eventNotifierProvider.notifier).loadEvents();
+      ref.read(budgetNotifierProvider.notifier).loadBudget();
+      ref.read(profileNotifierProvider.notifier).loadProfile();
+    });
+  }
+
+void _showSetBudgetDialog() {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return _SetBudgetDialog();
+    },
+  );
+}
+
+  @override
+  Widget build(BuildContext context) {
+    // Acessamos o 'ref' diretamente, sem precisar passá-lo como parâmetro
     final eventState = ref.watch(eventNotifierProvider);
     final budgetState = ref.watch(budgetNotifierProvider);
     final profileState = ref.watch(profileNotifierProvider);
-    
+
+    if (!budgetState.isLoading && budgetState.budget == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showSetBudgetDialog();
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         // Conditionally show a personalized greeting
@@ -31,7 +62,8 @@ class HomeScreen extends ConsumerWidget {
             : Text('Welcome, ${profileState.nickname}!'),
         actions: [
           // Show the profile photo in the app bar
-          if (profileState.photoPath != null && File(profileState.photoPath!).existsSync())
+          if (profileState.photoPath != null &&
+              File(profileState.photoPath!).existsSync())
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CircleAvatar(
@@ -166,9 +198,10 @@ class _BudgetView extends StatelessWidget {
                       children: [
                         Text(
                           formatNumber(remainingBudget),
-                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const Text(
                           'Remaining',
@@ -231,7 +264,8 @@ class _BudgetInfo extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
+          style:
+              TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
         ),
       ],
     );
@@ -287,6 +321,64 @@ class _RecentEventsList extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SetBudgetDialog extends ConsumerStatefulWidget {
+  @override
+  _SetBudgetDialogState createState() => _SetBudgetDialogState();
+}
+
+class _SetBudgetDialogState extends ConsumerState<_SetBudgetDialog> {
+  final _budgetController = TextEditingController();
+
+  @override
+  void dispose() {
+    _budgetController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Set Your Monthly Budget'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            const Text(
+                'Welcome! To start tracking your expenses, please set your monthly budget.'),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _budgetController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Monthly Budget',
+                border: OutlineInputBorder(),
+                prefixText: 'R\$ ',
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Save'),
+          onPressed: () {
+            final double? budget = double.tryParse(_budgetController.text);
+            if (budget != null && budget > 0) {
+              // Salva o orçamento e fecha o diálogo
+              ref.read(budgetNotifierProvider.notifier).setBudget(budget);
+              Navigator.of(context).pop();
+            } else {
+              // Mostra um erro se o valor for inválido
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please enter a valid budget.')),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

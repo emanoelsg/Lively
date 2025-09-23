@@ -40,7 +40,7 @@ class EventHistoryScreen extends ConsumerWidget {
                             onPressed: () {
                               ref
                                   .read(eventNotifierProvider.notifier)
-                                  .deleteEvent(event.id!);
+                                  .deleteEvent(event.id!,ref);
                             },
                           ),
                         ],

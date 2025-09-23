@@ -76,7 +76,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     if (lastAccess != null &&
         (now.year > lastAccess.year ||
             (now.year == lastAccess.year && now.month > lastAccess.month))) {
-      await ref.read(eventNotifierProvider.notifier).clearAllEvents();
+      await ref.read(eventNotifierProvider.notifier).clearAllEvents(ref as WidgetRef);
     }
 
     await db.insert(

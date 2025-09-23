@@ -1,11 +1,8 @@
-// providers/event_provider.dart
-
+// test/unit/event_provider_test.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:lively/models/event.dart';
 import 'package:lively/services/event_repository.dart';
-
-// importa o budget provider para atualizar orçamento junto com eventos
 import 'package:lively/providers/budget_provider.dart';
 
 /// State class for event list with loading and error states
@@ -40,8 +37,9 @@ class EventState {
 /// Notifier class that manages the event state
 class EventNotifier extends StateNotifier<EventState> {
   final EventRepository _repository;
+  final Ref ref;
 
-  EventNotifier(this._repository)
+  EventNotifier(this._repository, this.ref)
       : super(const EventState(events: [], isLoading: true, totalSpent: 0));
 
   /// Loads all events from the repository
@@ -63,12 +61,11 @@ class EventNotifier extends StateNotifier<EventState> {
     }
   }
 
-  Future<void> clearAllEvents(WidgetRef ref) async {
+  Future<void> clearAllEvents() async {
     try {
       state = state.copyWith(isLoading: true, error: null);
       await _repository.deleteAllEvents();
       await loadEvents();
-      await ref.read(budgetNotifierProvider.notifier).loadBudget();
     } catch (e) {
       state = state.copyWith(
         error: e.toString(),
@@ -78,7 +75,7 @@ class EventNotifier extends StateNotifier<EventState> {
   }
 
   /// Adds a new event
-  Future<void> addEvent(Event event, WidgetRef ref) async {
+  Future<void> addEvent(Event event) async {
     try {
       await _repository.insertEvent(event);
 
@@ -102,8 +99,7 @@ class EventNotifier extends StateNotifier<EventState> {
     }
   }
 
-  /// Updates an existing event
-  Future<void> updateEvent(Event event, WidgetRef ref) async {
+  Future<void> updateEvent(Event event) async {
     try {
       state = state.copyWith(isLoading: true, error: null);
       await _repository.updateEvent(event);
@@ -119,8 +115,7 @@ class EventNotifier extends StateNotifier<EventState> {
     }
   }
 
-  /// Deletes an event by ID
-  Future<void> deleteEvent(int id, WidgetRef ref) async {
+  Future<void> deleteEvent(int id) async {
     try {
       state = state.copyWith(isLoading: true, error: null);
       await _repository.deleteEvent(id);
@@ -157,13 +152,11 @@ class EventNotifier extends StateNotifier<EventState> {
   }
 
   /// Imports events from JSON
-  Future<void> importFromJson(String filePath, WidgetRef ref,
-      {bool replace = true}) async {
+  Future<void> importFromJson(String filePath, {bool replace = true}) async {
     try {
       state = state.copyWith(isLoading: true, error: null);
       await _repository.importFromJson(filePath, replace: replace);
       await loadEvents();
-      await ref.read(budgetNotifierProvider.notifier).loadBudget();
     } catch (e) {
       state = state.copyWith(
         error: e.toString(),
@@ -182,5 +175,5 @@ final eventRepositoryProvider = Provider<EventRepository>((ref) {
 final eventNotifierProvider =
     StateNotifierProvider<EventNotifier, EventState>((ref) {
   final repository = ref.watch(eventRepositoryProvider);
-  return EventNotifier(repository);
+  return EventNotifier(repository, ref);
 });

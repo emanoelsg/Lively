@@ -122,7 +122,7 @@ class _ConfigScreenState extends ConsumerState<ConfigScreen> {
       }
 
       await ref.read(eventNotifierProvider.notifier).importFromJson(
-            filePath,
+            filePath,ref,
             replace: shouldReplace,
           );
 

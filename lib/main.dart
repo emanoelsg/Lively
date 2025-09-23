@@ -8,6 +8,7 @@ import 'package:lively/l10n/app_localizations.dart';
 
 
 void main() {
+  
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: LivelyApp()));
 }
@@ -21,6 +22,7 @@ class LivelyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Lively',
       theme: AppTheme.lightTheme,
+      debugShowCheckedModeBanner: false,
       darkTheme: AppTheme.darkTheme,
       routerConfig: appRouter,
       localizationsDelegates:  [

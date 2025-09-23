@@ -59,6 +59,6 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify form submission
-    verify(() => mockEventNotifier.addEvent(any())).called(1);
+    verify(() => mockEventNotifier.addEvent(any(),any())).called(1);
   });
 }

@@ -9,10 +9,7 @@ import '../helpers/test_setup.dart';
 class MockImagePicker extends Mock implements ImagePicker {}
 
 void main() {
-  late MockImagePicker mockImagePicker;
-
   setUp(() async {
-    mockImagePicker = MockImagePicker();
     await setupTestEnvironment();
   });
 
@@ -49,9 +46,6 @@ void main() {
       expect(find.text('Please enter a nickname'), findsOneWidget);
     });
 
-    testWidgets('handles photo selection', (tester) async {
-      // TODO: Mock image picker and test photo selection
-      // This requires additional setup for handling platform channels
-    });
+  
   });
 }

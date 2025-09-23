@@ -1,134 +1,97 @@
-
 # Lively Budget Manager 📊
 
 [![Flutter CI](https://github.com/emanoelsg/Lively/actions/workflows/ci.yml/badge.svg)](https://github.com/emanoelsg/Lively/actions/workflows/ci.yml)
 
-Lively is a simple, beautiful, and 100% offline monthly expense manager built with Flutter. It helps you track your spending against a monthly budget in a clean and intuitive interface.
+---
 
+## 🇧🇷 Sobre o Projeto
 
-
-## ✨ Features
-
-* **Offline First:** All your data is stored securely on your device. No internet connection is needed.
-* **Budget Tracking:** Set a monthly budget and see your remaining funds at a glance.
-* **Visualized Spending:** A beautiful donut chart on the home screen visualizes your spending progress.
-* **Event History:** Add, edit, and delete expenses. View a complete history of all your transactions.
-* **Data Backup & Restore:** Export your budget and transaction data to a JSON file and import it anytime.
-* **Personalization:** Set a profile picture and nickname.
-* **Theming:** Supports both **Light** and **Dark** modes.
-* **Multi-language Support:** Fully localized for English and Portuguese.
+O **Lively** é um gerenciador de despesas mensais **simples, bonito e 100% offline**, construído em Flutter.  
+Ele ajuda você a controlar seus gastos em relação ao seu orçamento mensal em uma interface limpa e intuitiva.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🇺🇸 About the Project
 
-This project is built with a modern, scalable, and testable architecture.
-
-* **Framework:** [Flutter](https://flutter.dev/)
-* **State Management:** [Flutter Riverpod](https://riverpod.dev/)
-* **Navigation:** [go_router](https://pub.dev/packages/go_router)
-* **Database:** [sqflite](https://pub.dev/packages/sqflite) for local SQL persistence.
-* **UI:**
-    * **Charts:** [fl_chart](https://pub.dev/packages/fl_chart)
-    * **Image Handling:** [image_picker](https://pub.dev/packages/image_picker)
-* **Testing:**
-    * Unit, Widget, and Integration tests.
-    * **Mocking:** [Mocktail](https://pub.dev/packages/mocktail)
-    * **Database Testing:** [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi)
-* **CI/CD:** [GitHub Actions](https://github.com/features/actions) for automated testing, analysis, and builds.
-
-The architecture follows a clean, layered approach:
-
-**UI (Screens/Widgets) → State (Riverpod Notifiers) → Repository → Data Source (SQLite)**
+**Lively** is a **simple, beautiful, and 100% offline monthly expense manager** built with Flutter.  
+It helps you track your spending against a monthly budget in a clean and intuitive interface.
 
 ---
 
-## 📂 Project Structure
+## 📸 Screenshots
 
-The project is organized into logical directories to maintain a clean and scalable codebase.
-
-```
-
-lib
-├── core
-│   ├── constants.dart
-│   ├── db
-│   ├── router.dart
-│   ├── theme.dart
-│   └── utils
-├── l10n
-├── models
-├── providers
-├── screens
-├── services
-└── widgets
-
-````
+<p align="center">
+  <img src="assets/readme/flutter_01.png" alt="Home Screen" width="200"/>
+  <img src="assets/readme/flutter_02.png" alt="Add Event Screen" width="200"/>
+  <img src="assets/readme/flutter_03.png" alt="History Screen" width="200"/>
+  <img src="assets/readme/flutter_04.png" alt="Dark Mode" width="200"/>
+</p>
 
 ---
 
-## 🚀 Getting Started
+## ✨ Features | Funcionalidades
 
-To get a local copy up and running, follow these simple steps.
-
-### Prerequisites
-
-* Flutter SDK (version 3.19.0 or higher)
-* An IDE like VS Code or Android Studio
-
-### Installation
-
-1.  **Clone the repo**
-    ```sh
-    git clone [https://github.com/](https://github.com/)<YOUR_GITHUB_USERNAME>/<YOUR_REPOSITORY_NAME>.git
-    ```
-2.  **Navigate to the project directory**
-    ```sh
-    cd lively
-    ```
-3.  **Install dependencies**
-    ```sh
-    flutter pub get
-    ```
-4.  **Run the app**
-    ```sh
-    flutter run
-    ```
+- **Offline First / Offline Primeiro:** Todos os dados ficam salvos localmente, sem necessidade de internet.  
+- **Budget Tracking / Controle de Orçamento:** Defina um orçamento mensal e veja os gastos em tempo real.  
+- **Visualized Spending / Visualização dos Gastos:** Um gráfico em donut mostra o progresso dos seus gastos.  
+- **Event History / Histórico de Eventos:** Adicione, edite e exclua despesas com histórico completo.  
+- **Backup & Restore / Backup e Restauração:** Exporte e importe seus dados em JSON.  
+- **Personalization / Personalização:** Defina foto de perfil e apelido.  
+- **Theming / Temas:** Suporte a **Modo Claro e Escuro**.  
+- **Multi-language / Multi-idioma:** Totalmente localizado em **Português e Inglês**.  
 
 ---
 
-## ✅ Running Tests
+## 🛠️ Tech Stack & Architecture | Stack e Arquitetura
 
-This project has a comprehensive suite of tests.
+- **Framework:** [Flutter](https://flutter.dev/)  
+- **State Management / Gerenciamento de Estado:** [Riverpod](https://riverpod.dev/)  
+- **Navigation / Navegação:** [go_router](https://pub.dev/packages/go_router)  
+- **Database / Banco de Dados:** [sqflite](https://pub.dev/packages/sqflite)  
+- **Charts / Gráficos:** [fl_chart](https://pub.dev/packages/fl_chart)  
+- **Image Handling / Imagens:** [image_picker](https://pub.dev/packages/image_picker)  
+- **Testing / Testes:** Unitários, Widgets, Integração (Mocktail, sqflite_common_ffi)  
+- **CI/CD:** [GitHub Actions](https://github.com/features/actions)  
 
-1.  **Run Unit & Widget Tests:**
-    ```sh
-    flutter test
-    ```
-2.  **Run Integration Tests:**
-    ```sh
-    flutter test integration_test
-    ```
-3.  **Calculate Test Coverage:**
-    ```sh
-    flutter test --coverage
-    ```
+Arquitetura segue padrão limpo:  
+**UI → State (Riverpod Notifiers) → Repository → Data Source (SQLite)**  
 
 ---
 
-## 🤖 Continuous Integration
+## 🚀 Getting Started | Início Rápido
 
-This project uses **GitHub Actions** for its CI pipeline. The workflow, defined in `.github/workflows/ci.yml`, automatically performs the following on every push or pull request to the `main` branch:
+### Prerequisites | Pré-requisitos
+- Flutter SDK (3.19.0+)  
+- IDE como VS Code ou Android Studio  
 
-1.  **Verifies Formatting:** Checks that all code is correctly formatted.
-2.  **Analyzes Code:** Runs static code analysis to catch potential errors.
-3.  **Runs Tests:** Executes the full test suite (unit, widget, integration).
-4.  **Generates Coverage:** Calculates test coverage and uploads the report to Codecov.
-5.  **Builds APK:** Compiles a release-ready Android APK.
+### Installation | Instalação
+```sh
+git clone https://github.com/emanoelsg/Lively.git
+cd lively
+flutter pub get
+flutter run
+´´´
+# Unit & Widget
+flutter test
 
----
+# Integration
+flutter test integration_test
 
-## 📄 License
+# Coverage
+flutter test --coverage
 
-Distributed under the MIT License. See `LICENSE` file for more information.
-````
+
+🤖 Continuous Integration | Integração Contínua
+✅ Formatação
+
+✅ Análise estática
+
+✅ Testes (unit, widget, integration)
+
+✅ Coverage report (Codecov)
+
+✅ Build automático (APK release)
+
+📄 License | Licença
+Distribuído sob a licença MIT. Veja o arquivo LICENSE.
+Distributed under the MIT License. See LICENSE for details.

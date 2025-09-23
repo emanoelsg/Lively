@@ -60,9 +60,9 @@ class _AddEditEventScreenState extends ConsumerState<AddEditEventScreen> {
     try {
       final notifier = ref.read(eventNotifierProvider.notifier);
       if (widget.eventId == null) {
-        await notifier.addEvent(event);
+        await notifier.addEvent(event,ref);
       } else {
-        await notifier.updateEvent(event);
+        await notifier.updateEvent(event,ref);
       }
       if (mounted) {
         context.pop();
