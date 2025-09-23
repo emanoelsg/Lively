@@ -70,7 +70,7 @@ git clone https://github.com/emanoelsg/Lively.git
 cd lively
 flutter pub get
 flutter run
-´´´
+```
 # Unit & Widget
 flutter test
 
